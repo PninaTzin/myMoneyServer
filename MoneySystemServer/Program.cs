@@ -61,8 +61,6 @@ builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IManagerDesignService, ManagerDesignService>();
 builder.Services.AddScoped<IExpandedRevenuesService, ExpandedRevenuesSettingService>();
-builder.Services.AddScoped<IPDFService, PDFService>();
-
 
 builder.Services.AddSingleton<ITokenService, TokenService>();
 

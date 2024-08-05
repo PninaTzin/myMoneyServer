@@ -11,7 +11,7 @@ namespace Logic.Services
 {
     public interface IUserService
     {
-        List<UserDTO> GetUsers(int currentUserId,int managerId, UserSerach userSerach);
+        List<UserDTO> GetUsers(int currentUserId, UserSerach userSerach);
         List<IdName> GetUserTypes(int currentUserId);
         UserGlobalDTO GetUser(int id);
         bool AddUser(UserGlobalDTO user, int currentUserId);
@@ -37,9 +37,9 @@ namespace Logic.Services
             this.dbService = dbService;
         }
 
-        public List<UserDTO> GetUsers(int currentUserId,int managerId, UserSerach userSerach)
+        public List<UserDTO> GetUsers(int currentUserId, UserSerach userSerach)
         {
-            var users = dbService.entities.Users.Where(x=>x.ManagerId==managerId).ToList();
+            var users = dbService.entities.Users.ToList();
             List<String> searchOptionList = new List<String> { "סוגי משתמשים", "משתמשים תחת מלווה", "מלווים תחת מנהל" };
 
 
@@ -74,15 +74,15 @@ namespace Logic.Services
             //  if (currentUser.UserType.Id == 5)
             if (currentUser.UserType.Id == (int)userTypeDTO.userUnderLender)
             {
-                //users = users.Where(x => x.LenderId == currentUser.Id).ToList();
-                users = users.Where(x => x.UserTypeId == (int)userTypeDTO.lender).ToList();
+                users = users.Where(x => x.LenderId == currentUser.Id).ToList();
+                //users = users.Where(x => x.UserTypeId == (int)userTypeDTO.lender).ToList();
 
             }
             //else if (currentUser.UserType.Id == 2)
             else if (currentUser.UserType.Id == (int)userTypeDTO.lender)
             {
-                //users = users.Where(x => x.LenderId == currentUser.Id).ToList();
-                users = users.Where(x => x.UserTypeId == (int)userTypeDTO.lendersManager).ToList();
+                users = users.Where(x => x.LenderId == currentUser.Id).ToList();
+                //users = users.Where(x => x.UserTypeId == (int)/*userTypeDTO*/.lendersManager).ToList();
 
             }
 
@@ -134,33 +134,32 @@ namespace Logic.Services
 
 
         }
-
         public UserGlobalDTO GetUser(int id)
         {
             var users = dbService.entities.Users.ToList();
             var dbUser = dbService.entities.Users.FirstOrDefault(x => x.Id == id);
             if (dbUser != null)
             {
-                //if (users != null)
-                //{
-                //    //  if (currentUser.UserType.Id == 5)
-                //    if (id == (int)userTypeDTO.userUnderLender)
-                //    {
-                //        users = users.Where(x => x.LenderId == id).ToList();
-                //        //users = users.Where(x => x.UserTypeId == (int)userTypeDTO.lender).ToList();
+                if (users != null)
+                {
+                    //  if (currentUser.UserType.Id == 5)
+                    if (id == (int)userTypeDTO.userUnderLender)
+                    {
+                        users = users.Where(x => x.LenderId == id).ToList();
+                        //users = users.Where(x => x.UserTypeId == (int)userTypeDTO.lender).ToList();
 
-                //    }
-                //    //else if (currentUser.UserType.Id == 2)
-                //    else if (id == (int)userTypeDTO.lender)
-                //    {
-                //        users = users.Where(x => x.LenderId == id).ToList();
-                //        //users = users.Where(x => x.UserTypeId == (int)/*userTypeDTO*/.lendersManager).ToList();
-                //    }
+                    }
+                    //else if (currentUser.UserType.Id == 2)
+                    else if (id == (int)userTypeDTO.lender)
+                    {
+                        users = users.Where(x => x.LenderId == id).ToList();
+                        //users = users.Where(x => x.UserTypeId == (int)/*userTypeDTO*/.lendersManager).ToList();
+                    }
 
-                //}
+                }
 
-               // var list = users.Select(x => new UserGlobalDTO()
-                var user = new UserGlobalDTO()
+                List<UserGlobalDTO> list = users.Select(x => new UserGlobalDTO()
+                //var user = new UserGlobalDTO()
                 {
                     Id = dbUser.Id,
                     Email = dbUser.Email,

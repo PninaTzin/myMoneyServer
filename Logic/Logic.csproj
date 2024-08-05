@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.1.2" />
-    <PackageReference Include="iTextSharp.NetCore" Version="5.5.13.1" />
-    <PackageReference Include="MailKit" Version="4.7.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -21,8 +19,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Encoding" Version="4.3.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

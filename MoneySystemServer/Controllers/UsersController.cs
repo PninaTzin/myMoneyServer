@@ -23,7 +23,7 @@ namespace MoneySystemServer.Controllers
         public GResult<List<UserDTO>> GetUsers(UserSerach userSerach)
         {
         
-            return Success(userService.GetUsers(UserId.Value,ManagerId.Value, userSerach));
+            return Success(userService.GetUsers(UserId.Value, userSerach));
         }
 
         [HttpGet("{id}")]

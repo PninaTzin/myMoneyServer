@@ -45,19 +45,16 @@ namespace Logic.Services
             mm.Body = model.Body;
             mm.IsBodyHtml = false;
 
-            //if (mm.IsBodyHtml)
-            //{
-            //    mm.Body = "<div dir=rtl style='text-align:right'>" + mm.Body + "</div>";
-            //}
+            if (mm.IsBodyHtml)
+            {
+                mm.Body = "<div dir=rtl style='text-align:right'>" + mm.Body + "</div>";
+            }
 
-           // mm.To.Add(new MailAddress(model.))
             if (model.mails != null)
             {
                 foreach (var item in model.mails)
                 {
-                    mm.To.Add(new MailAddress(item));
-
-                  //  mm.To.Add(item);
+                    mm.To.Add(item);
                 }
 
             }
@@ -66,17 +63,12 @@ namespace Logic.Services
                 mm.To.Add(mm.From);
             }
 
-            //SmtpClient client = new SmtpClient(config.Value.Server, config.Value.Port)
-            //{
-            //    Credentials = new NetworkCredential(config.Value.Username, config.Value.Password)
-            //};
-            //client.EnableSsl = true;
-            SmtpClient mailClient = new SmtpClient(config.Value.Server);
-            mailClient.Credentials = new NetworkCredential(config.Value.Username, config.Value.Password);
-            mailClient.Port = config.Value.Port;
-            mailClient.EnableSsl = true;
-           // mailClient.UseDefaultCredentials = true;
-            mailClient.Send(mm);
+            SmtpClient client = new(config.Value.Server, config.Value.Port)
+            {
+                Credentials = new NetworkCredential(config.Value.Username, config.Value.Password)
+            };
+
+            client.Send(mm);
         }
     }
 
